@@ -12,6 +12,7 @@ const yesSentence = ["Sim!", "Com certeza!", "Sem dúvidas!", "Claro!", "Certame
 const noSentence = ["Não", "Negativo.", "Não mesmo!", "Claro que não!", "Jamais!"]
 const {google} = require('googleapis')
 const google_api_key = process.env['GOOGLE_API_KEY']
+const last_fm_api_key = process.env['LAST_FM_API_KEY']
 
 client.on("message", msg => {
     if(msg.author.bot) return
@@ -73,7 +74,7 @@ async function requestMusicLastFM(tag = 'disco'){
     const options = {
     method: 'GET',
     url: 'http://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&format=json',
-    params: {api_key: '7feaada85ee9580f1a43b1a6b2b707c4', tag: tag},
+    params: {api_key: last_fm_api_key, tag: tag},
     };
     const response = await axios.request(options);
     return response.data.tracks
@@ -109,7 +110,7 @@ async function youtubeSearch(search, msg){
         "part": [
             "snippet"
         ],
-        "maxResults": 5,
+        "maxResults": 2,
         "q": search,
     }, (err, res)=>{
         if(err) return console.log(err)
